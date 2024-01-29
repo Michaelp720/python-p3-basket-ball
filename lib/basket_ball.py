@@ -182,3 +182,78 @@ def game_dict():
             ]
         }
     }
+
+def get_teams_players(team):
+    return game_dict()[team]["players"]
+
+def get_all_players():
+    all_players = [game_dict()["home"]["players"], game_dict()["away"]["players"]]
+    return all_players
+
+# print(get_all_players())
+
+def player_stats(player_name):
+    home_players = get_teams_players("home")
+    away_players = get_teams_players("away")
+    for player in home_players:
+        if player["name"] == player_name:
+            return player
+    for player in away_players:
+        if player["name"] == player_name:
+            return player
+    print("Player not in game")
+    return
+
+def get_team(team):
+    return game_dict()[team]
+
+def num_points_per_game(player_name):
+    player = player_stats(player_name)
+    return player["points_per_game"]
+
+def player_age(player_name):
+    player = player_stats(player_name)
+    return player["age"]
+
+def team_colors(team_name):
+    if get_team("home")["team_name"] == team_name:
+        return get_team("home")["colors"]
+    if get_team("away")["team_name"] == team_name:
+        return get_team("away")["colors"]
+    print("Team is not in game")
+    return
+
+def team_names():
+    team_names_list = [get_team("home")["team_name"], get_team("away")["team_name"]]
+    return team_names_list
+
+def player_numbers(team_name):
+    team_loc = ""
+    if get_team("home")["team_name"] == team_name:
+        team_loc = "home"
+    elif get_team("away")["team_name"] == team_name:
+        team_loc = "away"
+    player_numbers_list = []
+    for player in get_teams_players(team_loc):
+        player_numbers_list.append(player["number"])
+    return player_numbers_list
+
+
+
+        
+    # get_team(team) returns game_dict()[team]
+    
+# print(player_numbers("Washington Wizards"))
+# print(team_names())
+
+# print(player_stats("Rui Hachimura"))
+# print(player_stats("Rui"))
+
+# print(num_points_per_game("Rui Hachimura"))
+# # => 11.3 expected
+
+# print(player_age("Rui Hachimura"))
+# => 24 expected
+
+# print(team_colors("Washington Wizards"))
+# => "Red", "White", "Navy Blue" expected
